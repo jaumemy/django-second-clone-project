@@ -31,10 +31,10 @@
         </div>
         <div class='navbar-nav navbar-right'>
           {% if user.is_authenticated %}
-            <a href="#">Post</a>
-            <a href="#">Galaxies</a>
-            <a href="#">Create Galaxy</a>
-            <a href="{% url 'accounts:logout' %}">Log Out</a>
+            <a href="#" class="btn btn-simple">Post</a>
+            <a href="#" class="btn btn-simple">Galaxies</a>
+            <a href="#" class="btn btn-simple">Create Galaxy</a>
+            <a href="{% url 'accounts:logout' %}" class="btn btn-simple">Log Out</a>
           {% else %}
             <a href="#" class="btn btn-simple">Galaxies</a>
             <a href="{% url 'accounts:login' %}" class="btn btn-simple">Log In</a>

@@ -8,7 +8,7 @@ class UserCreateForm(UserCreationForm):
         fields = ('username','email','password1','password2')
         model = get_user_model()
 
-    def __init__(self,*args,**kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
         self.fields['username'].label = 'Space Name'
         self.fields['email'].label = 'Space Email'

@@ -27,7 +27,7 @@ SECRET_KEY = 'rqt41rk@!2iu!ebq5!6z-r2(!am#7%y!n12&5ewo+x75-%^+48'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','spacerweb.herokuapp.com/']
+ALLOWED_HOSTS = ['127.0.0.1','spacerweb.herokuapp.com']
 
 
 # Application definition

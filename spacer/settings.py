@@ -27,7 +27,7 @@ SECRET_KEY = 'rqt41rk@!2iu!ebq5!6z-r2(!am#7%y!n12&5ewo+x75-%^+48'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['spacerweb.herokuapp.com/','127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','spacerweb.herokuapp.com/']
 
 
 # Application definition
@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,7 +62,7 @@ ROOT_URLCONF = 'spacer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR],
+        'DIRS': [TEMPLATES_DIR,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,11 +125,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = [Path.joinpath(BASE_DIR,"static")]
+
+STATIC_ROOT = Path.joinpath(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [Path.joinpath(BASE_DIR,"static")]
+
+
 
 
 LOGIN_REDIRECT_URL = 'test'

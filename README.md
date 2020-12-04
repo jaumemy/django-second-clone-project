@@ -14,6 +14,6 @@ I will try to host it on Heroku this time!
 After a lot of final touches I finally was able to finish it and deploy it to Heroku.
 If you feel curious, just sign up, join a galaxy or create one, and post something!
 
-[Spacer on Heroku!] (https://spacerweb.herokuapp.com/)
+[Spacer on Heroku!](https://spacerweb.herokuapp.com/)
 
 

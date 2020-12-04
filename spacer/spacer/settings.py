@@ -125,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIR = [Path.joinpath(BASE_DIR,"static")]
+STATICFILES_DIRS = [Path.joinpath(BASE_DIR,"static")]
 
 
 LOGIN_REDIRECT_URL = 'test'

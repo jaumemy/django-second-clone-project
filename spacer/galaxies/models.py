@@ -1,5 +1,7 @@
 from django.db import models
-from django.utils.text import slugify
+from django.template.defaultfilters import slugify
+from django.urls import reverse
+from django.conf import settings
 
 import misaka
 
@@ -38,7 +40,7 @@ class Galaxy(models.Model):
 
 class GalaxyMember(models.Model):
     galaxy = models.ForeignKey(Galaxy,related_name='memberships',on_delete=models.CASCADE)
-    user = models.ForeignKey(User,related_name='user_galaxies',on_delete=models.CASCADE')
+    user = models.ForeignKey(User,related_name='user_galaxies',on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username

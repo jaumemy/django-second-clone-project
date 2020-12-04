@@ -3,10 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 from django.http import Http404
+from django.contrib import messages
 
 from braces.views import SelectRelatedMixin
 
-from posts import form
+from posts import forms
 from posts import models
 
 from django.contrib.auth import get_user_model
@@ -26,8 +27,7 @@ class UserPosts(generic.ListView):
 
     def get_queryset(self):
         try:
-            self.post.user = User.objects.prefetch_related('posts').
-                get(username__iexact=self.kwargs.get('username'))
+            self.post_user = User.objects.prefetch_related('posts').get(username__iexact=self.kwargs.get('username'))
         except User.DoesNotExist:
             raise Http404
         else:
@@ -53,11 +53,11 @@ class CreatePost(LoginRequiredMixin,SelectRelatedMixin,generic.CreateView):
     fields = ("message","galaxy")
     model = models.Post
 
-    def form_valid(self):
+    def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        retun super().form_valid(form)
+        return super().form_valid(form)
 
 
 class DeletePost(LoginRequiredMixin,SelectRelatedMixin,generic.DeleteView):

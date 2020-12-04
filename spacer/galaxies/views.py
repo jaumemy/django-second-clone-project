@@ -6,7 +6,7 @@ from galaxies.models import Galaxy, GalaxyMember
 from django.contrib import messages
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
-from galaxies import models
+from . import models
 
 # Create your views here.
 
@@ -26,13 +26,13 @@ class ListGalaxies(generic.ListView):
 class JoinGalaxy(LoginRequiredMixin,generic.RedirectView):
 
     def get_redirect_url(self,*args,**kwargs):
-        retun reverse("galaxies:single", kwargs={"slug":self.kwargs.get(slug)})
+        return reverse("galaxies:single", kwargs={"slug":self.kwargs.get("slug")})
 
     def get(self,request,*args,**kwargs):
         galaxy = get_object_or_404(Galaxy, slug=self.kwargs.get("slug"))
 
         try:
-            GalaxyMember.object.create(user=self.request.user,galaxy=galaxy)
+            GalaxyMember.objects.create(user=self.request.user,galaxy=galaxy)
 
         except IntegrityError:
             messages.warning(self.request,f"You are already a member of {galaxy.name} galaxy")
@@ -45,14 +45,26 @@ class JoinGalaxy(LoginRequiredMixin,generic.RedirectView):
 
 class LeaveGalaxy(LoginRequiredMixin,generic.RedirectView):
 
-    def get_redirect_url(self,*args,**kwargs):
-        return reverse("galaxies:single",kwargs={"slug":self.kwargs.get("slug")})
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse("galaxies:single",kwargs={"slug": self.kwargs.get("slug")})
 
+    def get(self, request, *args, **kwargs):
         try:
-            membership = models.GalaxyMember.objects.filter(user=self.request.user, galaxy_slug=self.kwargs.get("slug")).get()
+            membership = models.GalaxyMember.objects.filter(
+                user=self.request.user,
+                galaxy__slug=self.kwargs.get("slug")
+            ).get()
+
         except models.GalaxyMember.DoesNotExist:
-            messages.warning(self.request,"You can not leave this galaxy. You are not in it")
+            messages.warning(
+                self.request,
+                "You can't leave this group because you aren't in it."
+            )
+
         else:
             membership.delete()
-            messages,success(self.request,"You have successfully left this galaxy")
-        return super().get(request,*args,**kwargs)
+            messages.success(
+                self.request,
+                "You have successfully left this galaxy."
+            )
+        return super().get(request, *args, **kwargs)

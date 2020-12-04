@@ -1,0 +1,34 @@
+{% extends "galaxies/galaxy_base.html" %}
+
+
+{% block pregalaxy %}
+
+<div class="container">
+  <h1>{{galaxy.name}}</h1>
+  <h2>Member Count : {{galaxy.members.count}}</h2>
+  <div class="content">
+    {% if user in galaxy.members.all %}
+      <a href="{% url 'galaxies:leave' slug=galaxy.slug %}" class="btn btn-lg btn-warning"><span class="fa fa-times-circle-o"></span>Leave</a>
+    {% else %}
+      <a href="{% url 'galaxies:join' slug=galaxy.slug %}" class="btn btn-lg btn-info"><span class="fa fa-check-circle-o"></span>Join</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block galaxy_content %}
+
+<div class="col-md-8">
+  {% if galaxy.posts.count == 0 %}
+    <p></p>
+    <h2>No posts in this galaxy yet!</h2>
+  {% else %}
+    {% for post in galaxy.posts.all %}
+      {% include "posts/_post.html" %}
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}

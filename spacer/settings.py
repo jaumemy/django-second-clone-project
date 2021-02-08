@@ -22,10 +22,13 @@ TEMPLATES_DIR = Path.joinpath(BASE_DIR,"templates")
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'rqt41rk@!2iu!ebq5!6z-r2(!am#7%y!n12&5ewo+x75-%^+48'
+# SECRET_KEY = 'rqt41rk@!2iu!ebq5!6z-r2(!am#7%y!n12&5ewo+x75-%^+48'
+import os
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','rqt41rk@!2iu!ebq5!6z-r2(!am#7%y!n12&5ewo+x75-%^+48')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG','') != 'False'
 
 ALLOWED_HOSTS = ['127.0.0.1','spacerweb.herokuapp.com']
 
@@ -137,3 +140,10 @@ STATICFILES_DIRS = [Path.joinpath(BASE_DIR,"static")]
 
 LOGIN_REDIRECT_URL = 'test'
 LOGOUT_REDIRECT_URL = 'thanks'
+
+
+
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
